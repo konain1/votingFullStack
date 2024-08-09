@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.hover-border-b:hover {
+    border-bottom-width: 4px;
+    border-bottom-color: black;
+  }
+
+ 
