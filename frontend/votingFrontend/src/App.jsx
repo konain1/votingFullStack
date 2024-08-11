@@ -6,6 +6,8 @@ import Dashboard from './components/Dashboard';
 import Dash from './components/Dash';
 import DashNav from './components/DashNav';
 import ChangePassword from './components/ChangePassword';
+import Profile from './components/Profile';
+import ProfileDetails from './components/ProfileDetails';
 
 
 function App() {
@@ -23,6 +25,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/dash' element={<Dash/>} />
         <Route path='/changepassword' element={<ChangePassword/>} />
+        <Route path='/profile' element={<Profile/>} />
+        <Route path='/profiledetails' element={<ProfileDetails/>} />
+
         {/* Add other routes here */}
       </Routes>
     </Router>

@@ -1,6 +1,7 @@
 
 const User = require('../models/user')
 const express = require('express')
+const bcrypt = require('bcrypt')
 const {generateToken,verifyTokenMiddleware }= require('../jwt')
 const route  = express.Router();
 
@@ -39,6 +40,18 @@ route.post('/create',async(req,res)=>{
    
 
    
+})
+route.put('/password',verifyTokenMiddleware, async(req,res)=>{
+    
+    let userid = req.user.userId;
+    let password = req.body.password;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password,salt);
+
+    await User.findByIdAndUpdate(userid,{password:hashedPassword})
+    res.status(200).json({ message: "Password updated successfully." });
+    
 })
 
 
