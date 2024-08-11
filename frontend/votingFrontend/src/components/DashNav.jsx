@@ -19,7 +19,7 @@ function DashNav() {
           <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M4 6h16M4 12h16m-7 6h7'></path>
         </svg>
       </button>
-      <div className={`flex flex-col sm:flex-row gap-1 sm:gap-20 px-10 font-stonewalls ${isOpen ? 'flex' : 'hidden'} sm:flex sm:h-auto transition-all duration-500 ease-in-out`}>
+      <div className={`flex flex-col sm:flex-row gap-1 sm:gap-20 px-10  ${isOpen ? 'flex' : 'hidden'} sm:flex sm:h-auto transition-all duration-500 ease-in-out`}>
         <h4 className='sm:text-lg border-b-4 border-transparent hover:border-[green] hover:text-white transition-all duration-500'>Dashboard</h4>
         <h4 className='sm:text-lg border-b-4 border-transparent hover:border-[green] hover:text-white transition-all duration-500'>Market</h4>
         <h4 className='sm:text-lg border-b-4 border-transparent hover:border-[green] hover:text-white transition-all duration-500'>Portfolio</h4>

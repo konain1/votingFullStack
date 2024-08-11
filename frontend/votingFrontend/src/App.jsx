@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Dash from './components/Dash';
 import DashNav from './components/DashNav';
+import ChangePassword from './components/ChangePassword';
 
 
 function App() {
@@ -14,13 +15,14 @@ function App() {
 
     
     <Router>
-    <DashNav/>
+    {/* <DashNav/> */}
 
       <Routes>
      
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/dash' element={<Dash/>} />
+        <Route path='/changepassword' element={<ChangePassword/>} />
         {/* Add other routes here */}
       </Routes>
     </Router>
