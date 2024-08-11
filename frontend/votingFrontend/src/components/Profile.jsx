@@ -55,9 +55,9 @@ function Profile() {
             <div className='flex justify-evenly w-[50%]'>
             <h4>Profile</h4>
                 <h4>Profile</h4>
-                <h4>Profile</h4>
-                <h4>Profile</h4>
-                <h4>Profile</h4>
+                <h4>about</h4>
+                <h4>Candidates</h4>
+                <h4>contacts</h4>
             </div>
              
                 <div></div>
