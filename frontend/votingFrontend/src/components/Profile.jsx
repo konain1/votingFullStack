@@ -1,13 +1,35 @@
 import React, { useState } from 'react';
 import ProfileDetails from './ProfileDetails';
+import axios from 'axios'
+
+import Candidate from './Candidate';
 
 function Profile(props) {
   const [activeTab, setActiveTab] = useState('Profile');
 
   const handleTabClick = (tabName) => {
+    handlefetchCandidates();
     setActiveTab(tabName);
   };
 
+
+  const [candidate,setCandidate] = useState([]);
+
+  const  handlefetchCandidates = async ()=>{
+   try {
+    let response = await axios.get('http://localhost:4001/candidate/api/v1/candidates', {
+        headers: { 'Content-type': 'application/json' },
+      });
+       
+       if(response.status === 200){
+           setCandidate(response.data.candidates)
+       }
+   } catch (error) {
+       console.log(error)
+       throw new Error('not able fetch data')
+   }
+      
+   }
   return (
     <>
       <div className='flex flex-col relative bg-[purple] h-[100vh]'>
@@ -43,6 +65,7 @@ function Profile(props) {
               <h4
                 className={`px-2 ${activeTab === 'Candidates' ? 'border-b-2 border-b-black  text-slate-950 font-extrabold' : ''}`}
                 onClick={() => handleTabClick('Candidates')}
+                // onClick={()=>handlefetchCandidates}
               >
                 Candidates
               </h4>
@@ -60,6 +83,8 @@ function Profile(props) {
           </div>
           <div className=' block h-[100%]'>
             {activeTab == 'Profile' ? <ProfileDetails user={props?.user}/> : ''}
+            {activeTab == 'Candidates' ? <Candidate  data={candidate}/> : ''}
+
 
             </div>
         </div>

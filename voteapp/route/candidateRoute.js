@@ -5,11 +5,13 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-router.get('/hello', (req, res) => {
-    res.send('hello candidate');
+router.get('/api/v1/candidates', async(req, res) => {
+
+    let candidates = await Candidate.find();
+    res.json({candidates})
 });
 
-router.post('/create',verifyTokenMiddleware, async function(req, res) {
+router.post('/api/v1/candidate/create',verifyTokenMiddleware, async function(req, res) {
     try {
         let data = req.body;
         let uderdi = req.user;
