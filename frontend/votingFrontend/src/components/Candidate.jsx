@@ -17,7 +17,7 @@ function Candidate(props) {
                   <div className="h-[70%] flex-col mx-5 sm:mx-10 justify-between py-5 sm:py-10 text-[20px] sm:text-[30px]">
                     <h4 className="font-stonewalls">Name: {candidate.name}</h4>
                     <h4 className="font-stonewalls">Party: {candidate.party}</h4>
-                    <h4 className="font-stonewalls">Votes: {candidate.votesCount}</h4>
+                    <h4 className="font-stonewalls">Vote: {candidate.votesCount}</h4>
                   </div>
   
                   <div className="h-[30%] flex justify-around items-center rounded-lg">
