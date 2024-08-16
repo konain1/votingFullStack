@@ -7,7 +7,7 @@ const route  = express.Router();
 
 
 
-route.get('/allusers',async function(req,res){
+route.get('/api/v1/users',async function(req,res){
 
     let users = await User.find();
 

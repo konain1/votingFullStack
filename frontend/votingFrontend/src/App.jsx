@@ -8,6 +8,7 @@ import DashNav from './components/DashNav';
 import ChangePassword from './components/ChangePassword';
 import Profile from './components/Profile';
 import ProfileDetails from './components/ProfileDetails';
+import Candidate from './components/Candidate';
 
 
 function App() {
@@ -27,6 +28,8 @@ function App() {
         <Route path='/changepassword' element={<ChangePassword/>} />
         <Route path='/profile' element={<Profile/>} />
         <Route path='/profiledetails' element={<ProfileDetails/>} />
+        <Route path='/candidate' element={<Candidate/>} />
+
 
         {/* Add other routes here */}
       </Routes>

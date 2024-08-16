@@ -11,7 +11,7 @@ router.get('/api/v1/candidates', async(req, res) => {
     res.json({candidates})
 });
 
-router.post('/api/v1/candidate/create',verifyTokenMiddleware, async function(req, res) {
+router.post('/api/v1/create',verifyTokenMiddleware, async function(req, res) {
     try {
         let data = req.body;
         let uderdi = req.user;

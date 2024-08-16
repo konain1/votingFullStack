@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
 import ProfileDetails from './ProfileDetails';
 import axios from 'axios'
-
+import Contacts from './Contacts'
 import Candidate from './Candidate';
 
 function Profile(props) {
   const [activeTab, setActiveTab] = useState('Profile');
 
   const handleTabClick = (tabName) => {
-    handlefetchCandidates();
     setActiveTab(tabName);
   };
 
 
   const [candidate,setCandidate] = useState([]);
+  const [contacts,setContacts] = useState([])
+
+  const handleFetchContacts = async  ()=>{
+
+    try {
+      let response = await axios.get('http://localhost:4001/api/v1/users', {
+          headers: { 'Content-type': 'application/json' },
+        });
+         
+         if(response.status === 200){
+          // console.log(response.data.users)
+             setContacts(response.data.users)
+         }
+     } catch (error) {
+         console.log(error)
+         throw new Error('not able fetch data')
+     }
+
+
+  }
 
   const  handlefetchCandidates = async ()=>{
    try {
@@ -64,14 +83,17 @@ function Profile(props) {
               </h4>
               <h4
                 className={`px-2 ${activeTab === 'Candidates' ? 'border-b-2 border-b-black  text-slate-950 font-extrabold' : ''}`}
-                onClick={() => handleTabClick('Candidates')}
-                // onClick={()=>handlefetchCandidates}
+                onClick={() =>{
+                   handleTabClick('Candidates')
+                    handlefetchCandidates()
+                }}
               >
                 Candidates
               </h4>
               <h4
                 className={`px-2 ${activeTab === 'Contacts' ? 'border-b-2 border-b-black  text-slate-950 font-extrabold' : ''}`}
-                onClick={() => handleTabClick('Contacts')}
+                onClick={() =>{ handleTabClick('Contacts')
+                handleFetchContacts()}}
               >
                 Contacts
               </h4>
@@ -84,6 +106,8 @@ function Profile(props) {
           <div className=' block h-[100%]'>
             {activeTab == 'Profile' ? <ProfileDetails user={props?.user}/> : ''}
             {activeTab == 'Candidates' ? <Candidate  data={candidate}/> : ''}
+            {activeTab == 'Contacts' ? <Contacts  users={contacts}/> : ''}
+
 
 
             </div>
