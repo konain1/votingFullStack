@@ -6,12 +6,9 @@ function Contacts({users}) {
 
   return (
    <>
-    <div className='flex-wrap'>
-        <div>
-UPPER
-        </div>
-        <div>middle</div>
-        <div className=' flex flex-wrap justify-around items-end '>
+    <div className='flex-wrap my-5 justify-center items-center '>
+   
+        <div className=' flex flex-wrap justify-around items-center w-[80%]  mx-auto gap-5 '>
         {users.map((user)=>{
             return(
                 <div key={user.phone} className='flex-wrap border border-black w-[60vw] h-[40vh] sm:w-[20vw] rounded-lg'>

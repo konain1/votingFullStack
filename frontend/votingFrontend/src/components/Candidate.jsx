@@ -67,21 +67,15 @@ function Candidate({handlefetchCandidates,data}) {
                   <button>Confirm</button>
                   <button>Cancel</button>
                </div> */}
-               { isDelete ? <>
+             
                   <button className="bg-[#494952] active:scale-95 px-6 sm:px-10 py-1 sm:py-2 text-sm rounded-md text-white">
                     Edit
                   </button>
                   <button onClick={()=>handleDelete(candidate._id)} className="bg-red-500 active:scale-95 px-6 sm:px-10 py-1 sm:py-2 text-sm rounded-md text-white">
                    Delete
                   </button>
-                  </>
-                   : <><button className="bg-[#494952] active:scale-95 px-6 sm:px-10 py-1 sm:py-2 text-sm rounded-md text-white">
-                    No
-                  </button>
-                  <button onClick={()=>handleDelete(candidate._id)} className="bg-red-500 active:scale-95 px-6 sm:px-10 py-1 sm:py-2 text-sm rounded-md text-white">
-                   yes
-                  </button>
-                  </> }
+             
+                  
                 </div>
               </div>
             );
