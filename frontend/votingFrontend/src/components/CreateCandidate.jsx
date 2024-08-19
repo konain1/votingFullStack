@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function CreateCandidate({setIsVisible}) {
+function CreateCandidate({setIsVisible, handlefetchCandidates}) {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [party, setParty] = useState('');
@@ -12,7 +12,9 @@ function CreateCandidate({setIsVisible}) {
   const navigate = useNavigate()
 
   async function createNominees() {
+
     let token = localStorage.getItem('token');
+    console.log('token',data)
     try {
       const response = await axios.post(
         'http://localhost:4001/candidate/api/v1/create',
@@ -21,10 +23,12 @@ function CreateCandidate({setIsVisible}) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-    
+      console.log(response.status)
       if (response.status === 201) {
         console.log('Candidate created successfully');
         // navigate('/dashboard')
+        handlefetchCandidates()
+        setIsVisible(false)
       } else {
         console.error('Error creating candidate', response.data);
       }
@@ -35,11 +39,8 @@ function CreateCandidate({setIsVisible}) {
 
   function handleForm(e) {
     e.preventDefault();
-    console.log(data);
+   
     createNominees();
-    setIsVisible(false)
-  
-
   }
 
   return (

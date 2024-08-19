@@ -18,11 +18,11 @@ function Dashboard() {
 
     async function fetchUser() {
       try {
-        const response = await axios.get('http://localhost:4001/home', {
+        const response = await axios.get('http://localhost:4001/api/v1/currentUser', {
           headers: { Authorization: `Bearer ${token}` }
         });
-        
-        setUser(response.data.users);
+        console.log(response.data.CurrentUser)
+        setUser(response.data.CurrentUser);
       } catch (error) {
         setError('Failed to fetch user data');
         navigate('/login');
@@ -37,7 +37,7 @@ function Dashboard() {
     
       
  
-      <Profile user={user}/>
+      <Profile  user={user}/>
     </>
   );
 }

@@ -82,7 +82,7 @@ router.post('/vote/:candidateId',verifyTokenMiddleware, async (req, res) => {
     }
 });
 
-router.delete('/delete/:candidateId',verifyTokenMiddleware,async (req,res)=>{
+router.delete('/api/v1/delete/:candidateId',verifyTokenMiddleware,async (req,res)=>{
 
    
 

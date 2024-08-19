@@ -69,13 +69,20 @@ route.post('/login', async (req, res) => {
   
 
 
-route.get('/home',verifyTokenMiddleware,async (req,res)=>{
+route.get('/api/v1/currentUser',verifyTokenMiddleware,async (req,res)=>{
 
     let userid = req.user.userId;
     
-    let users = await User.findById(userid);
+    let CurrentUser = await User.findById(userid);
 
-    res.json({users})
+    res.json({CurrentUser})
+})
+
+route.put('/api/v1/userUpdate',verifyTokenMiddleware,async(req,res)=>{
+    let data = req.body;
+    let userId = req.user.userId;
+    let updateUserData = await User.findByIdAndUpdate(userId,data)
+    res.json({updateUserData})
 })
 
 module.exports = route
