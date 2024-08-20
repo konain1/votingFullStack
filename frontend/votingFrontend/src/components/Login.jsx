@@ -15,16 +15,24 @@ function Login() {
         phone,
         password
       });
+  
+      console.log("useree",response.data.userInfo);
+  
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token); // Store the token
+        // Store the token and userId in localStorage
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userId', response.data.userInfo._id); // Assuming user ID is returned as user._id
+        localStorage.setItem('loginUser', JSON.stringify(response.data.userInfo)); // Stringify the user object
+  
         navigate('/dashboard'); // Redirect to the dashboard
       } else {
         setError('Login failed');
       }
     } catch (error) {
-      setError(error.message);
+      setError('Login failed: ' + error.message);
     }
   }
+  
 
   return (
     <div className='overflow-hidden p-4'>

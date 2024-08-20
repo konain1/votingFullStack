@@ -21,7 +21,7 @@ function Dashboard() {
         const response = await axios.get('http://localhost:4001/api/v1/currentUser', {
           headers: { Authorization: `Bearer ${token}` }
         });
-        console.log(response.data.CurrentUser)
+        // console.log(response.data.CurrentUser)
         setUser(response.data.CurrentUser);
       } catch (error) {
         setError('Failed to fetch user data');

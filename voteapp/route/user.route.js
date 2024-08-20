@@ -2,7 +2,7 @@
 const User = require('../models/user')
 const express = require('express')
 const bcrypt = require('bcrypt')
-const {generateToken,verifyTokenMiddleware }= require('../jwt')
+const {generateToken,verifyTokenMiddleware }= require('../jwt');
 const route  = express.Router();
 
 
@@ -13,6 +13,25 @@ route.get('/api/v1/users',async function(req,res){
 
     res.json({users})
 })
+
+route.delete('/api/v1/deleteUser/:userId',verifyTokenMiddleware,async(req,res)=>{
+
+    let userId = req.params.userId;
+    let AdminId = req.user.userId
+
+        
+    let Admin = await User.findById(AdminId)
+    console.log("admin",Admin)
+
+    if(Admin.role != 'admin'){
+         return res.json({msg:' you are unauthorize to delete '})
+    }
+    
+    await User.findByIdAndDelete(userId)
+
+    res.json({msg:'user Deleted'})
+})
+
 
 route.post('/create',async(req,res)=>{
 

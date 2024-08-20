@@ -107,7 +107,7 @@ function EditProfile({ CurrentUser }) {
               Update Profile
             </button>
           </div>
-          <div className="flex justify-center mt-4">
+          {/* <div className="flex justify-center mt-4">
             <button
               type="button"
               onClick={() => navigate('/dashboard')}
@@ -115,7 +115,7 @@ function EditProfile({ CurrentUser }) {
             >
               Back to Dashboard
             </button>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
