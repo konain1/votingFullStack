@@ -33,7 +33,7 @@ route.delete('/api/v1/deleteUser/:userId',verifyTokenMiddleware,async(req,res)=>
 })
 
 
-route.post('/create',async(req,res)=>{
+route.post('/api/v1/register',async(req,res)=>{
 
     let data = req.body;
 

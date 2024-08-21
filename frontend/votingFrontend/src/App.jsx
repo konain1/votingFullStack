@@ -9,6 +9,7 @@ import ChangePassword from './components/ChangePassword';
 import Profile from './components/Profile';
 import ProfileDetails from './components/ProfileDetails';
 import Candidate from './components/Candidate';
+import SignUp from './components/SignUp';
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     {/* <DashNav/> */}
 
       <Routes>
-     
+      <Route path="/" element={<SignUp/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/dash' element={<Dash/>} />
