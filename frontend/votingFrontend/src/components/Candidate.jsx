@@ -5,16 +5,14 @@ import axios from 'axios'
 function Candidate ({ handlefetchCandidates, data }) {
   const [isVisible, setIsVisible] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
-  const [user,setUser] = useState(null)
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('loginUser')))
 
-  let loginUser = JSON.parse(localStorage.getItem('loginUser')); // Parse the stringified user object
-  console.log(loginUser?.role);
-
+  const token = localStorage.getItem('token') // Assuming you are using token-based authentication
 
 
   const handleDelete = async id => {
     try {
-      const token = localStorage.getItem('token') // Assuming you are using token-based authentication
+
       const response = await axios.delete(
         `http://localhost:4001/candidate/api/v1/delete/${id}`,
         {
@@ -35,12 +33,49 @@ function Candidate ({ handlefetchCandidates, data }) {
       alert('An error occurred while deleting the candidate')
     }
   }
+
+
+
+  const handleVoting = async (Cand_id)=>{
+
+
+    try {
+
+     
+        
+        let response = await axios.post(`http://localhost:4001/candidate/vote/${Cand_id}`,{},{
+          headers: { Authorization: `Bearer ${token}` }
+        })
+    
+      console.log("response" , response)
+
+      if(response.status == 200){
+        alert("voted")
+        const updatedUser = {...user,isVoted:true}
+        localStorage.setItem('loginUser', JSON.stringify(updatedUser))
+        setUser(updatedUser)
+        handlefetchCandidates()
+      }else{
+        alert("error")
+        alert('An error occurred while voting')
+      }
+     
+      
+      
+    } catch (error) {
+      throw new Error("voting Error ",error)
+    }
+    
+  }
   
   return (
     <>
       <div className='h-[100vh]  justify-center relative'>
         <div className='flex justify-center mx-40 my-10'>
-          <button
+        {
+          user.role  == 'admin' &&
+          (
+            <button
             onClick={() => setIsVisible(!isVisible)}
             className={`${
               isVisible ? 'bg-red-500' : 'bg-[#49c8db]'
@@ -48,6 +83,9 @@ function Candidate ({ handlefetchCandidates, data }) {
           >
             {isVisible ? 'Close' : 'Create'}
           </button>
+          )
+        }
+         
         </div>
         <div className='relative flex justify-center items-center top-[28%]'>
           {isVisible ? (
@@ -77,7 +115,7 @@ function Candidate ({ handlefetchCandidates, data }) {
                 </div>
 
                 {
-                  loginUser.role  == 'admin' ?
+                  user.role  == 'admin' ?
                   <>
                   <div className='h-[30%] flex justify-around items-center rounded-lg relative'>
                   <button className='bg-[#494952] active:scale-95 px-6 sm:px-10 py-1 sm:py-2 text-sm rounded-md text-white'>
@@ -93,9 +131,19 @@ function Candidate ({ handlefetchCandidates, data }) {
                   </> : 
                   <>
                   <div className='h-[30%] flex justify-around items-center rounded-lg relative'>
-                  <button className='bg-[#494952] active:scale-95 px-6 sm:px-10 py-1 sm:py-2 text-sm rounded-md text-white'>
+                  {
+                    user.isVoted == true ? <>
+                    <button className='bg-[#ef2626] active:scale-95 px-6 sm:px-10 py-1 sm:py-2 text-sm rounded-md text-white'>
+                    Voted
+                  </button>
+                    </> :
+                     <>
+                     <button onClick={()=>handleVoting(candidate._id)} className='bg-[#2ad462] active:scale-95 px-6 sm:px-10 py-1 sm:py-2 text-sm rounded-md text-white'>
                     Vote
                   </button>
+                    </>
+                  }
+                 
                   
                 </div>
                   </>

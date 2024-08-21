@@ -10,6 +10,8 @@ const SignUp = () => {
   const [phone, setPhone] = useState('');
   const [age, setAge] = useState('');
   const [otp, setOtp] = useState('');
+  const [isVoted, setIsVoted] = useState(false);
+  const [role, setRole] = useState('voter');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [allUsers, setAllUsers] = useState([]);
@@ -56,6 +58,15 @@ const SignUp = () => {
       return;
     }
 
+    // Check if an admin already exists in the database
+    if (role === 'admin') {
+      const existingAdmin = allUsers.find((user) => user.role === 'admin');
+      if (existingAdmin) {
+        setError('An admin account already exists. Only one admin is allowed.');
+        return;
+      }
+    }
+
     // Proceed with creating the account if validation passes
     try {
       const response = await axios.post('http://localhost:4001/api/v1/register', {
@@ -64,6 +75,8 @@ const SignUp = () => {
         password,
         phone,
         age,
+        isVoted,
+        role
       });
 
       if (response.status === 200) {
@@ -167,6 +180,32 @@ const SignUp = () => {
               placeholder="Enter your age"
               required
             />
+          </div>
+
+          {/* Role Input */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Role:</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="voter">Voter</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          {/* Is Voted Input */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Has Voted:</label>
+            <select
+              value={isVoted}
+              onChange={(e) => setIsVoted(e.target.value === 'true')}
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+            </select>
           </div>
 
           <button

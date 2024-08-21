@@ -75,13 +75,16 @@ function Profile(props) {
         <div className="upper h-[40%] bg-[black] items-center"></div>
 
         <div className="lower h-[60%] bg-white">
-          <div className="sm:px-20 text-black flex-col sm:py-14 justify-center items-center">
+          <div className="sm:px-20 text-black flex sm:py-14 justify-around items-center">
             <h1 className="sm:text-[30px] sm:mt-5 mt-20 mx-10 sm:mx-2 w-[300px] text-[25px] ">
               {currentUser?.name}
             </h1>
-            <p className="sm:text-[10px] mx-2 sm:block hidden w-80 text-[#282626]">
-              Upgrade your Account to receive price and volume alerts on your phone.
-            </p>
+
+            <button className="sm:text-[20px] sm:mt-5 mt-20 mx-10 sm:mx-2 w-[300px] text-[25px] ">
+             Logout
+            </button>
+            
+            
           </div>
 
           <div className="border text-white flex justify-between mt-4">
