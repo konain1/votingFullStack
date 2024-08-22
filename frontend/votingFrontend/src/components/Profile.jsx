@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProfileDetails from './ProfileDetails';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Contacts from './Contacts';
 import Candidate from './Candidate';
 import EditProfile from '../EditProfile';
@@ -11,6 +12,7 @@ function Profile(props) {
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(props.user);
 
+  const navigate = useNavigate()
   useEffect(() => {
     if (activeTab === 'Profile') {
       handleCurrentUser(); // Fetch the updated user data when switching to Profile tab
@@ -67,6 +69,14 @@ function Profile(props) {
     }
   };
 
+  const handleLogout = ()=>{
+
+    localStorage.removeItem('loginUser')
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+    navigate('/login')
+  }
+
   return (
     <>
       <div className="flex flex-col relative bg-[purple] h-[100vh]">
@@ -80,7 +90,7 @@ function Profile(props) {
               {currentUser?.name}
             </h1>
 
-            <button className="sm:text-[20px] sm:mt-5 mt-20 mx-10 sm:mx-2 w-[300px] text-[25px] ">
+            <button onClick={handleLogout} className="sm:text-[20px] sm:mt-5 mt-20 mx-10 sm:mx-2 w-[300px] text-[25px] ">
              Logout
             </button>
             
