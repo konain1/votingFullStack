@@ -37,6 +37,12 @@ const userSchema = new mongoose.Schema({
     isVoted:{
         type:Boolean,
         default:false
+    },
+    profileImage:{
+        type:String
+    },
+    bannerImage:{
+        type:String
     }
 })
 

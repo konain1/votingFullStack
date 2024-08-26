@@ -15,6 +15,7 @@ const SignUp = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [allUsers, setAllUsers] = useState([]);
+  const [profileImage,setProfileImage] = useState();
   const navigate = useNavigate();
 
   // Fetch all users when the component mounts
@@ -195,6 +196,9 @@ const SignUp = () => {
             </select>
           </div>
 
+           
+
+         
           {/* Is Voted Input */}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">Has Voted:</label>
@@ -204,7 +208,7 @@ const SignUp = () => {
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="false">No</option>
-              <option value="true">Yes</option>
+              {/* <option value="true">Yes</option> */}
             </select>
           </div>
 

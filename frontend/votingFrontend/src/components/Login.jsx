@@ -8,6 +8,9 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+
+
+  
   async function fetchLogin(event) {
     event.preventDefault();
     try {
@@ -16,7 +19,6 @@ function Login() {
         password
       });
   
-      console.log("useree",response.data.userInfo);
   
       if (response.data.token) {
         // Store the token and userId in localStorage
