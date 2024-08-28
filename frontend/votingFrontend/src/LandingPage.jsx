@@ -18,18 +18,23 @@ function LandingPage() {
       opacity: 1,
       delay: 0.2
     });
+
     tl.from(buttonRef.current, {
       x: 300,
-    });
-    tl.from(logoRef.current, {
-      x: -300,
-    });
-    tl.from(leftRef.current, {
-      x: '-100%'
-    }, "leftright");
-    tl.from(rightRef.current, {
-      x: '100%'
-    }, "leftright");
+    })
+      .from(logoRef.current, {
+        x: -300,
+      }, "-=0.4")
+      .from(leftRef.current.children, {
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+      }, "leftright")
+      .from(rightRef.current, {
+        x: '100%',
+        opacity: 0,
+      }, "leftright");
+   
   });
 
   return (
