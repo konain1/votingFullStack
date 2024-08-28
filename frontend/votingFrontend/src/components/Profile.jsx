@@ -5,7 +5,6 @@
   import Contacts from './Contacts';
   import Candidate from './Candidate';
   import EditProfile from '../EditProfile';
-  // Import FontAwesome icons (ensure FontAwesome is installed and properly set up in your project)
   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
   import { faEnvelope, faUser } from '@fortawesome/free-regular-svg-icons';
   import { faCameraRotate } from '@fortawesome/free-solid-svg-icons'; // Import the camera rotate icon

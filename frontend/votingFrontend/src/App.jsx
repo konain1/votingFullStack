@@ -10,6 +10,7 @@ import Profile from './components/Profile';
 import ProfileDetails from './components/ProfileDetails';
 import Candidate from './components/Candidate';
 import SignUp from './components/SignUp';
+import LandingPage from './LandingPage';
 
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
     {/* <DashNav/> */}
 
       <Routes>
-      <Route path="/" element={<SignUp/>} />
+      <Route path="/" element={<LandingPage/>} />
+
+      <Route path="/signup" element={<SignUp/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/dash' element={<Dash/>} />
