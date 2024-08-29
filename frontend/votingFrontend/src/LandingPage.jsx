@@ -68,6 +68,7 @@ function LandingPage() {
         </div>
        
       </div>
+      
 
       {/* Main Content */}
       <div className="flex">

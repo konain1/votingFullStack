@@ -8,9 +8,6 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-
-
-  
   async function fetchLogin(event) {
     event.preventDefault();
     try {
@@ -19,14 +16,12 @@ function Login() {
         password
       });
   
-  
       if (response.data.token) {
-        // Store the token and userId in localStorage
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userId', response.data.userInfo._id); // Assuming user ID is returned as user._id
-        localStorage.setItem('loginUser', JSON.stringify(response.data.userInfo)); // Stringify the user object
+        localStorage.setItem('userId', response.data.userInfo._id); 
+        localStorage.setItem('loginUser', JSON.stringify(response.data.userInfo));
   
-        navigate('/dashboard'); // Redirect to the dashboard
+        navigate('/dashboard'); 
       } else {
         setError('Login failed');
       }
@@ -34,42 +29,34 @@ function Login() {
       setError('Login failed: ' + error.message);
     }
   }
-  
 
   return (
-    <div className='overflow-hidden p-4'>
-      <form 
-        className='border border-black p-7 max-w-md mx-auto bg-[orange] rounded-md'
-        onSubmit={fetchLogin}
-      >
-        <div className='mb-4'>
-          <label className='block text-lg font-medium mb-2'>Phone :</label>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="login wrap bg-[#2c2c2c] text-white p-[47px] pt-[30px] pb-[57px] rounded-[17px] max-w-xs mx-auto">
+        <div className="h1 text-center text-[1.3em]">Login</div>
+        <form onSubmit={fetchLogin}>
           <input 
             type="text" 
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className='bg-green-500 text-white p-2 rounded-md w-full sm:w-auto placeholder-white' 
-            placeholder='Phone' 
+            className="block w-full p-[13px] mt-[20px] rounded-full bg-[#3c3c3c] text-white text-[0.8em] focus:outline-none focus:animate-bounce"
+            placeholder="Phone" 
           />
-        </div>
-        <div className='mb-4'>
-          <label className='block text-lg font-medium mb-2'>Password :</label>
           <input 
             type="password" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='bg-green-500 text-white p-2 rounded-md w-full sm:w-auto placeholder-white' 
-            placeholder='Password' 
+            className="block w-full p-[13px] mt-[20px] rounded-full bg-[#3c3c3c] text-white text-[0.8em] focus:outline-none focus:animate-bounce1"
+            placeholder="Password" 
           />
-        </div>
-        {error && <p className='text-red-500 mb-4'>{error}</p>}
-        <button 
-          type="submit" 
-          className='bg-blue-500 text-white py-2 px-5 rounded-md w-full sm:w-auto'
-        >
-          Login
-        </button>
-      </form>
+          {error && <p className="text-red-500 mt-[20px]">{error}</p>}
+          <input 
+            type="submit" 
+            value="Login"
+            className="btn mt-[40px] w-full p-[13px] rounded-full font-semibold bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 text-white cursor-pointer transition-all duration-400 ease-in-out hover:bg-[#1e1e1e]"
+          />
+        </form>
+      </div>
     </div>
   );
 }

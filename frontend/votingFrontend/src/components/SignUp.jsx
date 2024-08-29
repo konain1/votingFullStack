@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loader from './Loader'; // Import the Loader component
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -15,12 +16,13 @@ const SignUp = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [allUsers, setAllUsers] = useState([]);
-  const [profileImage,setProfileImage] = useState();
+  const [profileImage, setProfileImage] = useState();
+  const [simmerLoading, setSimmerLoading] = useState(false); // Add simmerLoading state
   const navigate = useNavigate();
 
-  // Fetch all users when the component mounts
   useEffect(() => {
     const fetchAllUsers = async () => {
+      setSimmerLoading(true); // Start loading
       try {
         const response = await axios.get('http://localhost:4001/api/v1/users');
         if (response.status === 200) {
@@ -30,6 +32,8 @@ const SignUp = () => {
         }
       } catch (error) {
         console.error('An error occurred while fetching users:', error);
+      } finally {
+        setSimmerLoading(false); // End loading
       }
     };
 
@@ -38,10 +42,12 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSimmerLoading(true); // Start loading
 
     // Check if passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match');
+      setSimmerLoading(false); // End loading
       return;
     }
 
@@ -51,11 +57,12 @@ const SignUp = () => {
     );
 
     if (existingUser) {
-      if (existingUser.email === email) {
-        setError('Email already exists. Please choose another email.');
-      } else if (existingUser.phone === phone) {
-        setError('Phone number already exists. Please choose another phone number.');
-      }
+      setError(
+        existingUser.email === email
+          ? 'Email already exists. Please choose another email.'
+          : 'Phone number already exists. Please choose another phone number.'
+      );
+      setSimmerLoading(false); // End loading
       return;
     }
 
@@ -64,6 +71,7 @@ const SignUp = () => {
       const existingAdmin = allUsers.find((user) => user.role === 'admin');
       if (existingAdmin) {
         setError('An admin account already exists. Only one admin is allowed.');
+        setSimmerLoading(false); // End loading
         return;
       }
     }
@@ -77,7 +85,7 @@ const SignUp = () => {
         phone,
         age,
         isVoted,
-        role
+        role,
       });
 
       if (response.status === 200) {
@@ -89,143 +97,163 @@ const SignUp = () => {
       }
     } catch (error) {
       setError('An error occurred: ' + error.message);
+    } finally {
+      setSimmerLoading(false); // End loading
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        {success && <p className="text-green-500 mb-4">{success}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your name"
-              required
-            />
-          </div>
+      {simmerLoading ? (
+        <Loader /> // Show loader when simmerLoading is true
+      ) : (
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+          <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {success && <p className="text-green-500 mb-4">{success}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Name:
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your name"
+                required
+              />
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Email:</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Email:
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Password:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Password:
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password:</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Confirm your password"
-              required
-            />
-          </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Confirm Password:
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Confirm your password"
+                required
+              />
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Phone:</label>
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your phone number"
-              required
-            />
-          </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Phone:
+              </label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your phone number"
+                required
+              />
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">OTP:</label>
-            <input
-              type="number"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Not allowed"
-              disabled
-            />
-          </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                OTP:
+              </label>
+              <input
+                type="number"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Not allowed"
+                disabled
+              />
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Age:</label>
-            <input
-              type="number"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your age"
-              required
-            />
-          </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Age:
+              </label>
+              <input
+                type="number"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your age"
+                required
+              />
+            </div>
 
-          {/* Role Input */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Role:</label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            {/* Role Input */}
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Role:
+              </label>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="voter">Voter</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
+            {/* Is Voted Input */}
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Has Voted:
+              </label>
+              <select
+                value={isVoted}
+                onChange={(e) => setIsVoted(e.target.value === 'true')}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="false">No</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 mb-4"
             >
-              <option value="voter">Voter</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
-           
-
-         
-          {/* Is Voted Input */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Has Voted:</label>
-            <select
-              value={isVoted}
-              onChange={(e) => setIsVoted(e.target.value === 'true')}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="false">No</option>
-              {/* <option value="true">Yes</option> */}
-            </select>
-          </div>
-
+              Create Account
+            </button>
+          </form>
           <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 mb-4"
+            onClick={() => navigate('/login')}
+            className="w-full bg-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-400 transition duration-300"
           >
-            Create Account
+            Already have an account? Log in
           </button>
-        </form>
-        <button
-          onClick={() => navigate('/login')}
-          className="w-full bg-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-400 transition duration-300"
-        >
-          Already have an account? Log in
-        </button>
-      </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -8,6 +8,7 @@
   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
   import { faEnvelope, faUser } from '@fortawesome/free-regular-svg-icons';
   import { faCameraRotate } from '@fortawesome/free-solid-svg-icons'; // Import the camera rotate icon
+import ButtonComponent from './ButtonComponent';
 
   function Profile(props) {
     const [activeTab, setActiveTab] = useState('Profile');
@@ -140,6 +141,7 @@
 
     return (
       <>
+    
         <div className="flex flex-col relative bg-[purple] h-[100vh]">
 
         <div>
@@ -156,6 +158,7 @@
           </div>
         </div>
 
+     
          
 
           <div className="upper h-[40%] bg-[black] items-center"></div>
@@ -166,9 +169,15 @@
                 {currentUser?.name}
               </h1>
 
-              <button onClick={handleLogout} className="sm:text-[20px] sm:mt-5 mt-20 mx-10 sm:mx-2 w-[300px] text-[25px] ">
-                Logout
-              </button>
+              
+
+
+                  <ButtonComponent className={`font-inherit sm:text-xs text-[12px] bg-gradient-to-b from-red-400 to-red-600 text-white sm:px-5 px-2 sm:py-3 py-1 flex items-center justify-center border-none rounded-full shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl active:transform active:scale-95 active:shadow-md`}
+                   onClick={handleLogout}> LogOut </ButtonComponent>
+
+
+
+
             </div>
 
             <div className="border text-white flex justify-between mt-4">

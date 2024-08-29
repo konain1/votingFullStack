@@ -12,7 +12,7 @@ function Candidate ({ handlefetchCandidates, data }) {
 
   const handleDelete = async id => {
     try {
-
+        
       const response = await axios.delete(
         `http://localhost:4001/candidate/api/v1/delete/${id}`,
         {
@@ -79,9 +79,13 @@ function Candidate ({ handlefetchCandidates, data }) {
             onClick={() => setIsVisible(!isVisible)}
             className={`${
               isVisible ? 'bg-red-500' : 'bg-[#49c8db]'
-            } px-5 py-1 rounded-lg  cursor-pointer border border-black font-stonewalls`}
+            } border-2 border-[#24b4fb] bg-[#24b4fb] rounded-lg px-4 py-2 transition-all duration-200 ease-in-out text-base hover:bg-[#0071e2]`}
           >
-            {isVisible ? 'Close' : 'Create'}
+            {isVisible ? <span class="flex justify-center items-center text-white font-semibold">
+    Close
+  </span>: <span class="flex justify-center items-center text-white font-semibold">
+    Create
+  </span>}
           </button>
           )
         }
