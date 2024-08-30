@@ -3,7 +3,7 @@ import axios from 'axios'
 import Card from '../Card'
 
 function Contacts ({ users }) {
-  const loggedInUserId = localStorage.getItem('userId') // Assuming you store the logged-in user's ID in localStorage
+  const loggedInUserId = localStorage.getItem('userId')
 
   const handleDelete = async userId => {
     const token = localStorage.getItem('token')
@@ -35,8 +35,7 @@ function Contacts ({ users }) {
         {users
           .filter(user => user._id !== loggedInUserId)
           .map(user => (
-            <>
-              {console.log(user)}
+            <div key={user._id}>
             
               <Card
                 key={user.phone}
@@ -46,7 +45,7 @@ function Contacts ({ users }) {
                 Voted={user.isVoted}
                 profileImage={user?.profileImage}
               />
-            </>
+            </div>
           ))}
       </div>
     </div>

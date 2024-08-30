@@ -60,6 +60,22 @@ route.post('/api/v1/profilepic',verifyTokenMiddleware, async (req, res) => {
     }
 });
 
+route.post('/api/v1/resetUserVoterValue', async (req, res) => {
+    try {
+        // Update all users, setting isVoted to false
+        const updatedUserData = await User.updateMany({}, { $set: { isVoted: false } });
+
+        // Respond with a success message
+        res.json({ msg: "All user data updated", modifiedCount: updatedUserData.modifiedCount });
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: error.message });
+    }
+});
+
+
+
 route.post('/api/v1/register',async(req,res)=>{
 
     let data = req.body;

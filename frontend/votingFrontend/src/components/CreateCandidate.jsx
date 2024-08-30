@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function CreateCandidate({setIsVisible, handlefetchCandidates}) {
+
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [party, setParty] = useState('');
@@ -14,7 +15,7 @@ function CreateCandidate({setIsVisible, handlefetchCandidates}) {
   async function createNominees() {
 
     let token = localStorage.getItem('token');
-    console.log('token',data)
+
     try {
       const response = await axios.post(
         'http://localhost:4001/candidate/api/v1/create',
@@ -43,6 +44,8 @@ function CreateCandidate({setIsVisible, handlefetchCandidates}) {
     createNominees();
   }
 
+
+ 
   return (
     <div className="flex justify-center  items-center h-[60vh] absolute z-20 sm:w-[30%]  sm:left-[35%]">
       <form onSubmit={handleForm} className='bg-black text-white p-6 rounded-lg sm:w-[100%]'>

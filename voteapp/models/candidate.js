@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const User = require('./user')
+const User = require('./user');
+
 // Define the candidate schema with additional fields
 const candidateSchema = new mongoose.Schema({
     name: {
@@ -16,7 +17,6 @@ const candidateSchema = new mongoose.Schema({
         min: 25,
         required: true
     },
-   
     email: {
         type: String,
         unique: true,
@@ -37,13 +37,16 @@ const candidateSchema = new mongoose.Schema({
     votesCount:{
         type:Number,
         default:0
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        expires: '6h'   // TTL index to delete documents after 6 hours
     }
-    
-},
+}, 
 {
     timestamps: true 
 });
-
 
 // Pre-save middleware to validate email and name
 candidateSchema.pre('save', async function(next) {
