@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import Dash from './components/Dash';
 import DashNav from './components/DashNav';
 import ChangePassword from './components/ChangePassword';
 import Profile from './components/Profile';
@@ -29,7 +28,6 @@ function App() {
       <Route path="/signup" element={<SignUp/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path='/dash' element={<Dash/>} />
         <Route path='/changepassword' element={<ChangePassword/>} />
         <Route path='/profile' element={<Profile/>} />
         <Route path='/profiledetails' element={<ProfileDetails/>} />

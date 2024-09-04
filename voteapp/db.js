@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Candidate = require('./models/candidate'); // Make sure the path is correct
 
-const mongoLocalURL = 'mongodb+srv://konain7:Kaunain99@cluster0.rmyvhx6.mongodb.net/your_database_name'; // Replace 'your_database_name' with your actual DB name
+const mongoLocalURL = 'mongodb+srv://konain7:Kaunain99@cluster0.rmyvhx6.mongodb.net/'; // Replace 'your_database_name' with your actual DB name
 
 
 

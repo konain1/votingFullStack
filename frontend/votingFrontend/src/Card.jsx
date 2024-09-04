@@ -50,7 +50,8 @@ function Card(props) {
           {props.role}
         </button>
         {
-            props.role != 'admin' ? <button className="w-[76px] h-[31px] border-2 border-black rounded-[4px] font-bold text-[11px] text-white bg-black uppercase transition-all duration-300 hover:bg-white hover:text-black">
+            props.role != 'admin' ? 
+          <button className="w-[76px] h-[31px] border-2 border-black rounded-[4px] font-bold text-[11px] text-white bg-black uppercase transition-all duration-300 hover:bg-white hover:text-black">
           Button
         </button> : ''
         }

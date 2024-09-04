@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faUser } from '@fortawesome/free-regular-svg-icons';
 import { faCameraRotate } from '@fortawesome/free-solid-svg-icons'; 
 import ButtonComponent from './ButtonComponent';
+import CandidateCard from './CandidateCard';
 
 function Profile(props) {
   const [activeTab, setActiveTab] = useState('Profile');
@@ -20,16 +21,11 @@ function Profile(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch user data when switching to the Profile tab
-    if (activeTab === 'Profile') {
+  if (activeTab === 'Profile') {
       handleCurrentUser();
     }
   }, [activeTab]);
 
-  useEffect(() => {
-    // Reset user voted value when the component mounts
-    console.log(candidate)
-  }, [candidate]); // Empty dependency array ensures this runs only once when the component mounts
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -236,7 +232,8 @@ function Profile(props) {
           <div className="block h-[100%]">
             {activeTab === 'Profile' && <ProfileDetails user={currentUser} />}
             {activeTab === 'Candidates' && (
-              <Candidate handlefetchCandidates={handlefetchCandidates} data={candidate} />
+
+              <CandidateCard handlefetchCandidates={handlefetchCandidates} data={candidate}/>
             )}
             {activeTab === 'Contacts' && <Contacts users={contacts} />}
             {activeTab === 'EditProfile' && (
