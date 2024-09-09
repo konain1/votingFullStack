@@ -102,7 +102,7 @@ const CandidateCard = ({ handlefetchCandidates, data }) => {
         )}
       </div>
 
-      <div className='flex flex-wrap justify-center items-center'>
+      <div className='flex flex-wrap justify-around items-center'>
         {data.map((candidate, index) => (
           <>
             <div key={candidate._id}>

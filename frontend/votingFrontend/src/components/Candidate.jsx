@@ -89,7 +89,9 @@ function Candidate ({ handlefetchCandidates, data }) {
           )}
         </div>
 
-        <div className='relative flex justify-center items-center top-[28%]'>
+
+        <div className='relative flex justify-center items-center top-[28%] '>
+
           {isVisible ? (
             <CreateCandidate
               setIsVisible={setIsVisible}
@@ -100,7 +102,7 @@ function Candidate ({ handlefetchCandidates, data }) {
           )}
         </div>
 
-        <div className='flex flex-wrap justify-center items-center'>
+        <div className='flex flex-wrap justify-around items-center'>
           {data.map((candidate, index) => {
             return (
               <>
