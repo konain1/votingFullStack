@@ -1,20 +1,55 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 function Card (props) {
   const [flag, setFlag] = useState(false)
   const [party, setParty] = useState('')
+  const [name,setName] = useState(props.name)
+  const [ email,setEmail] = useState(props.email)
+  const [age,setAge] = useState(props.age)
 
   const User = useSelector(state => state.UserStore.User)
 
-  const handleNominee = () => {
-    // handle nominee logic
-    setFlag(!flag)
-  }
 
+  const data = { email, name, party, age };
+
+  
   const handleParty = e => {
     setParty(e.target.value)
-    console.log(e.target.value)
+  }
+  const handleConfirm = ()=>{
+    createNominees()
+  }
+
+
+  async function createNominees() {
+
+    let token = localStorage.getItem('token');
+
+    try {
+      const response = await axios.post(
+        'http://localhost:4001/candidate/api/v1/create',
+        data,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log(response.status)
+      if (response.status === 201) {
+        console.log('Candidate created successfully');
+        // navigate('/dashboard')
+        // handlefetchCandidates()
+        // setIsVisible(false)
+        setFlag(!flag)
+      } else {
+        console.error('Error creating candidate', response.data);
+       
+      }
+    } catch (error) {
+      console.error('Error creating candidate:', error);
+      alert('party or person has already been choosen')
+    }
   }
 
   return (
@@ -96,7 +131,7 @@ function Card (props) {
             </button>
             {User.role === 'admin' && (
               <button
-                onClick={handleNominee}
+                onClick={()=>setFlag(!flag)}
                 className='w-[76px] h-[31px] border-2 border-black rounded-[4px] font-bold text-[11px] text-white bg-black uppercase transition-all duration-300 hover:bg-white hover:text-black'
               >
                 nominee
@@ -119,7 +154,7 @@ function Card (props) {
             </div>
            
               <div className='flex justify-around  '>
-                <button className='w-[56px] h-[25px] border-2 border-black rounded-[4px] font-bold text-[9px] text-white bg-[green] uppercase transition-all duration-300 hover:bg-white hover:text-black'>
+                <button onClick={handleConfirm} className='w-[56px] h-[25px] border-2 border-black rounded-[4px] font-bold text-[9px] text-white bg-[green] uppercase transition-all duration-300 hover:bg-white hover:text-black'>
                   Confirm
                 </button>
                 <button onClick={()=>setFlag(!flag)} className='w-[56px] h-[25px] border-2 border-black rounded-[4px] font-bold text-[9px] text-white bg-[red] uppercase transition-all duration-300 hover:bg-white hover:text-black'>

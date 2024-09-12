@@ -44,6 +44,7 @@ function Contacts ({ users }) {
                 role={user.role}
                 Voted={user.isVoted}
                 profileImage={user?.profileImage}
+                age={user.age}
               />
             </div>
           ))}
