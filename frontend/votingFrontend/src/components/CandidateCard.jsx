@@ -4,16 +4,23 @@ import CreateCandidate from './CreateCandidate'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCameraRotate } from '@fortawesome/free-solid-svg-icons'; 
-
+import { useSelector,useDispatch } from 'react-redux';
+import {loginUser} from '../redux/DashboarduserSlice'
 
 const CandidateCard = ({ handlefetchCandidates, data }) => {
+
+
   const [isVisible, setIsVisible] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem('loginUser'))
-  )
+  // const [user, setUser] = useState()
 
-  const token = localStorage.getItem('token') // Assuming you are using token-based authentication
+  const dispatch = useDispatch()
+  
+
+  const token = localStorage.getItem('token') 
+
+//   getting from redux
+const user = useSelector(state => state.UserStore.User)
 
   const handleDelete = async id => {
     try {
@@ -53,8 +60,9 @@ const CandidateCard = ({ handlefetchCandidates, data }) => {
       if (response.status == 200) {
         alert('voted')
         const updatedUser = { ...user, isVoted: true }
-        localStorage.setItem('loginUser', JSON.stringify(updatedUser))
-        setUser(updatedUser)
+        // localStorage.setItem('loginUser', JSON.stringify(updatedUser))
+        dispatch(loginUser(updatedUser))
+        // setUser(updatedUser)
         handlefetchCandidates()
       } else {
         alert('error')
@@ -66,13 +74,13 @@ const CandidateCard = ({ handlefetchCandidates, data }) => {
   }
 
   useEffect(() => {
-    console.log("dATA CHANGED", data)
-  }, [data]);
+    console.log("voted", data)
+  }, [handleVoting]);
 
   return (
     <>
       <div className='flex justify-center mx-40 my-10'>
-        {user.role == 'admin' && (
+        {user?.role == 'admin' && (
           <button
             onClick={() => setIsVisible(!isVisible)}
             className={`${
@@ -102,11 +110,11 @@ const CandidateCard = ({ handlefetchCandidates, data }) => {
         )}
       </div>
 
-      <div className='flex flex-wrap justify-around items-center'>
+      <div className='flex flex-wrap justify-around items-center '>
         {data.map((candidate, index) => (
-          <>
-            <div key={candidate._id}>
-              <div className='w-[300px] p-[25px] bg-[#EBD18D] rounded-[20px] font-system-ui'>
+        
+            <div key={candidate.email}>
+              <div className='w-[300px] my-2 p-[25px] bg-[#EBD18D] rounded-[20px] font-system-ui'>
                 <div className='flex flex-row items-center justify-between'>
                   <div className='relative flex flex-row items-center z-10 '>
                   {
@@ -117,7 +125,7 @@ const CandidateCard = ({ handlefetchCandidates, data }) => {
                     </>
                     :
                     <>
-                    <div className='flex justify-center items-center   font-medium text-[16px] text-white w-[40px] h-[40px] rounded-full bg-[green]'>
+                    <div key={candidate._id} className='flex justify-center items-center   font-medium text-[16px] text-white w-[40px] h-[40px] rounded-full bg-[green]'>
    
                     {candidate.votesCount}
                  
@@ -187,7 +195,7 @@ const CandidateCard = ({ handlefetchCandidates, data }) => {
                 </div>
               </div>
             </div>
-          </>
+         
         ))}
       </div>
     </>

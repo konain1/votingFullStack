@@ -5,7 +5,8 @@ import { faPhone,faUnlockKeyhole,faUserTie } from '@fortawesome/free-solid-svg-i
 import { useNavigate } from 'react-router-dom';
 
 function ProfileDetails(props) {
-    const navigate = useNavigate();
+
+   const navigate = useNavigate();
    const HandleChangePassword = ()=>{
 
     navigate('/changepassword')
