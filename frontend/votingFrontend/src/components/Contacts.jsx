@@ -5,6 +5,8 @@ import Card from '../Card'
 function Contacts ({ users }) {
   const loggedInUserId = localStorage.getItem('userId')
 
+  console.log('contact component')
+
   const handleDelete = async userId => {
     const token = localStorage.getItem('token')
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function EditProfile({ CurrentUser }) {
+  console.log('editprofile component')
   const [name, setName] = useState(CurrentUser?.name || '');
   const [email, setEmail] = useState(CurrentUser?.email || '');
   const [phone, setPhone] = useState(CurrentUser?.phone || '');
@@ -25,6 +26,9 @@ function EditProfile({ CurrentUser }) {
       setError('Please update at least one field.');
       return;
     }
+
+    
+
 
     setError(''); // Clear error message if validation passes
 

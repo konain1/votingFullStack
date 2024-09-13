@@ -1,4 +1,4 @@
-  import React, { useEffect, useState } from 'react';
+  import React, { useCallback, useEffect, useState } from 'react';
   import ProfileDetails from './ProfileDetails';
   import axios from 'axios';
   import { useNavigate } from 'react-router-dom';
@@ -18,10 +18,12 @@
 
 
   function Profile() {
+    console.log('profile')
     const [activeTab, setActiveTab] = useState('Profile');
     const [candidate, setCandidate] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [dp,setDp] = useState(false)
+    const [currentUser, setCurrentUser] = useState(null);
     
 
 
@@ -29,11 +31,7 @@
     const LoginUser = useSelector((state) => state.UserStore.User);
     const candidates = useSelector(state=>state.CandidateStore.candidates)
 
-    if(candidates){
-      console.log('redux',candidates)
-    }
-
-    const [currentUser, setCurrentUser] = useState(null);
+   
 
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -42,6 +40,12 @@
       // Set currentUser when LoginUser from Redux is updated
       if (LoginUser) {
         setCurrentUser(LoginUser);
+      }
+      if(candidates){
+        setCandidate(candidates)
+       }
+      return ()=>{
+        console.log('willUnmount')
       }
     });
 
@@ -54,13 +58,14 @@
       if (activeTab === 'Profile') {
         handleCurrentUser();
       }
-    }, [activeTab,dp]);
+    }, [activeTab]);
 
     const handleTabClick = (tabName) => {
       setActiveTab(tabName);
     };
 
-    const handleFetchContacts = async () => {
+   
+    const handleFetchContacts = useCallback(async () => {
       try {
         let response = await axios.get('http://localhost:4001/api/v1/users', {
           headers: { 'Content-type': 'application/json' },
@@ -73,7 +78,7 @@
         console.log(error);
         throw new Error('Not able to fetch data');
       }
-    };
+    },[])
 
     const handleCurrentUser = async () => {
       // No need to fetch current user from an API if we already have it in Redux
@@ -84,9 +89,6 @@
 
     const handlefetchCandidates = async () => {
 
-
-  
-    
       try {
         
         let response = await axios.get('http://localhost:4001/candidate/api/v1/candidates', {
@@ -104,6 +106,16 @@
         throw new Error('Not able to fetch data');
       }
     };
+
+
+   const handleReduxCandidate = ()=>{
+    
+    if(candidates){
+      setCandidate(candidates)
+    }
+   }
+
+
 
     const handleLogout = () => {
       localStorage.removeItem('loginUser');
@@ -239,7 +251,7 @@
                   }`}
                   onClick={() => {
                     handleTabClick('Candidates');
-                    handlefetchCandidates();
+                    handleReduxCandidate() 
                   }}
                 >
                   Candidates
@@ -262,7 +274,7 @@
             <div className="block h-[100%]">
               {activeTab === 'Profile' && <ProfileDetails user={currentUser} />}
               {activeTab === 'Candidates' && (
-                <CandidateCard handlefetchCandidates={handlefetchCandidates} data={candidate} />
+                <CandidateCard  />
               )}
               {activeTab === 'Contacts' && <Contacts users={contacts} />}
               {activeTab === 'EditProfile' && (

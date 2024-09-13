@@ -18,7 +18,7 @@ function Dashboard() {
     dispatch(getCandidate())
 
     
-  },[dispatch])
+  },[])
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -43,7 +43,7 @@ function Dashboard() {
     }
 
     fetchUser();
-  }, [navigate]);
+  },[]);
 
   return (
     <>
