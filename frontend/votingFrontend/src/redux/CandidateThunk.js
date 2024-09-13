@@ -7,7 +7,7 @@ const getCandidate = createAsyncThunk('getCandidate', async () => {
   });
 
   if (response.status === 200) {
-    console.log(response.status)
+    // console.log(response.status)
     return response.data;
   } else {
     throw new Error('Failed to fetch candidates');

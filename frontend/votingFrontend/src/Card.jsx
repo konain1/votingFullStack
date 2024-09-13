@@ -49,6 +49,7 @@ function Card (props) {
     } catch (error) {
       console.error('Error creating candidate:', error);
       alert('party or person has already been choosen')
+      setFlag(!flag)
     }
   }
 

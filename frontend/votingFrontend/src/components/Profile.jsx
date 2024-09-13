@@ -47,11 +47,11 @@
 
     useEffect(()=>{
       dispatch(getCandidate())
+      
     },[dispatch])
 
     useEffect(() => {
       if (activeTab === 'Profile') {
-        // Ensure currentUser is updated when Profile tab is clicked
         handleCurrentUser();
       }
     }, [activeTab,dp]);
