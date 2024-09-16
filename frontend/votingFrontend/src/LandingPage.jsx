@@ -38,10 +38,10 @@ function LandingPage() {
   });
 
   return (
-    <div className="bg-[#0f172a] min-h-screen text-white">
+    <div className="bg-[#0f172a] min-h-screen text-white ">
       {/* Navbar */}
       <div className="flex justify-between items-center p-6 bg-[#1e293b] shadow-lg">
-        <div ref={logoRef} className="text-xl font-bold">
+        <div ref={logoRef} className="sm:text-xl text-xs font-bold ">
           VoterSocialMedia
         </div>
 
@@ -122,7 +122,7 @@ function LandingPage() {
         </div>
 
         {/* Right Side Content */}
-        <div ref={rightRef} className="w-full md:w-1/2 p-8">
+        <div ref={rightRef} className="w-full md:w-1/2 p-8 sm:block  hidden">
           <div className="bg-[green] p-8 rounded-lg shadow-md w-full max-w-md mx-auto">
             <h2 className="text-2xl font-bold mb-6 text-center">How to Use VoterSocialMedia</h2>
             <ul className="list-disc list-inside text-base space-y-4">

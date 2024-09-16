@@ -8,8 +8,10 @@ function Card (props) {
   const [name,setName] = useState(props.name)
   const [ email,setEmail] = useState(props.email)
   const [age,setAge] = useState(props.age)
+  
 
   const User = useSelector(state => state.UserStore.User)
+
 
 
   const data = { email, name, party, age };

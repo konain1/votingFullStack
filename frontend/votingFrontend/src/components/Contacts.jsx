@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Card from '../Card'
 
 function Contacts ({ users }) {
   const loggedInUserId = localStorage.getItem('userId')
-
-  console.log('contact component')
 
   const handleDelete = async userId => {
     const token = localStorage.getItem('token')
@@ -31,6 +29,9 @@ function Contacts ({ users }) {
     }
   }
 
+ 
+
+  
   return (
     <div className='flex-wrap my-5 justify-center items-center'>
       <div className='flex flex-wrap justify-around items-center w-[80%] mx-auto gap-5'>
@@ -47,6 +48,7 @@ function Contacts ({ users }) {
                 Voted={user.isVoted}
                 profileImage={user?.profileImage}
                 age={user.age}
+                
               />
             </div>
           ))}

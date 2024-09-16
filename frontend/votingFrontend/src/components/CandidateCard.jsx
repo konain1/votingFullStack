@@ -13,7 +13,9 @@ const CandidateCard = () => {
 
   // Get candidates from Redux store
   const CandidateData = useSelector(state => state.CandidateStore.candidates);
-  const user = useSelector(state => state.UserStore.User);
+  const user = useSelector(state => state.UserStore.User); // currentUser
+  const totalUsers = useSelector(state=>state.UsersStore.users) // all users
+
 
   // Memoized fetch function
   const handlefetchCandidatesMemoized = useCallback(() => {
@@ -23,7 +25,7 @@ const CandidateCard = () => {
   }, [CandidateData]);
 
   useEffect(() => {
-    handlefetchCandidatesMemoized(); // Call the memoized fetch function
+    handlefetchCandidatesMemoized(); 
   }, [CandidateData, handlefetchCandidatesMemoized]);
 
   useEffect(()=>{
@@ -92,7 +94,7 @@ const CandidateCard = () => {
       alert('An error occurred while voting');
     }
   };
-
+ 
   return (
     <>
       {/* Candidate list UI */}
@@ -135,7 +137,7 @@ const CandidateCard = () => {
               </div>
               <div className="mt-[50px] font-medium text-[14px] text-black">
                 <span className="font-bold text-black">{candidate.votesCount}</span> out of /{' '}
-                <span className="font-bold text-black">45%</span>
+                <span className="font-bold text-black">{totalUsers?.users?.length}</span>
               </div>
               <div className="w-full mt-[15px]">
                 <progress className="w-full h-[4px] rounded-full bg-[#00000030]" max="100" value="40"></progress>

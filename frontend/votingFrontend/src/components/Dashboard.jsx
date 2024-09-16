@@ -7,6 +7,7 @@ import Profile from './Profile';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../redux/DashboarduserSlice';
 import getCandidate from '../redux/CandidateThunk';
+import GetUser from '../redux/UsersThunk';
 
 function Dashboard() {
   // const [user, setUser] = useState(null);
@@ -14,9 +15,10 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch()
+  
   useEffect(()=>{
     dispatch(getCandidate())
-
+    dispatch(GetUser())
     
   },[])
 
