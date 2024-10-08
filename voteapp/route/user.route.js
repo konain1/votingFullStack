@@ -40,20 +40,18 @@ route.delete('/api/v1/deleteUser/:userId',verifyTokenMiddleware,async(req,res)=>
 
 route.post('/api/v1/profilepic',verifyTokenMiddleware, async (req, res) => {
     try {
-        const { profilePic } = req.body; // Destructure to get the correct key
+        const { profilePic } = req.body; 
 
         console.log('Server side received profile picture URL:', profilePic);
 
-        // Here, you would typically update the user's profile in the database with this new profile picture URL.
-        // Example:
-        const userId = req.user.userId // Assuming you're using a middleware to get the user ID from the token
-        console.log(userId)
+    
+        const userId = req.user.userId 
         const user = await User.findById(userId);
         user.profileImage = profilePic;
         await user.save();
 
-        // res.json({ success: true, profilePic });
-        res.json({msg:'done'})
+        res.json({ success: true, profilePic });
+        // res.json({msg:'done'})
     } catch (error) {
         console.error('Error updating profile picture:', error);
         res.status(500).json({ success: false, message: 'Failed to update profile picture', error });

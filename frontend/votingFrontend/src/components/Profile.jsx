@@ -23,6 +23,7 @@
     const [candidate, setCandidate] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [dp,setDp] = useState(false)
+    const [dpImg,setDpImg] = useState()
     const [currentUser, setCurrentUser] = useState(null);
     
 
@@ -143,6 +144,36 @@
         console.log('Cloudinary uploading Error', error);
       }
     }
+    
+    async function handleDisplayPicture(input) {
+      let file = input.target.files[0];
+
+      try {
+        
+        const base64 = await new Promise((resolve,reject)=>{
+
+          const fileReader = new FileReader();  
+          fileReader.readAsDataURL(file);
+
+
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+    
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        })
+        setDpImg(base64)
+        console.log(base64)
+      } catch (error) {
+        console.log('base64 error ',error)
+        
+      }
+    
+      
+    }
+    
 
     const profilePicHandler = async (dp) => {
       let token = localStorage.getItem('token');
@@ -160,6 +191,7 @@
 
         if (response.status === 200) {
           console.log('Profile picture updated successfully');
+          setDpImg(response.status)
           setCurrentUser((prevUser) => ({
             ...prevUser,
             profileImage: dp, // Update the profileImage property
@@ -191,6 +223,8 @@
           <div>
             <div className="circle absolute top-[35%] w-[100px] h-[100px] overflow-hidden flex bg-[lightgreen] border rounded-full left-[5%]">
               <img className="h-[100%] w-[100%] rounded-lg" src={`${currentUser?.profileImage}`} alt="Profile" />
+              {/* <img className="h-[100%] w-[100%] rounded-lg" src={dpImg} alt="Profile" /> */}
+
             </div>
             <div>
               <div className="absolute flex justify-center border items-center overflow-hidden h-[5%] w-[5%] sm:h-[2%] sm:w-[2%] sm:mt-[25%] sm:left-[10%] mt-[83%]  left-[27%] rounded-lg">
