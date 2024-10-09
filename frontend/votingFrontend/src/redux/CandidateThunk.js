@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const getCandidate = createAsyncThunk('getCandidate', async () => {
+  console.log('get candidate redux')
   let response = await axios.get('http://localhost:4001/candidate/api/v1/candidates', {
     headers: { 'Content-type': 'application/json' },
   });

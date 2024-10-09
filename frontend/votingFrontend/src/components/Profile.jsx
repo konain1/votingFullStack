@@ -12,6 +12,8 @@
   import CandidateCard from './CandidateCard';
   import { useSelector,useDispatch } from 'react-redux';
   import getCandidate from '../redux/CandidateThunk';
+import { loginUser } from '../redux/DashboarduserSlice';
+import useResetVotedValue from '../components/utils/useResetUserVotedValue'
 
 
 
@@ -19,7 +21,7 @@
 
   function Profile() {
     console.log('profile')
-    const [activeTab, setActiveTab] = useState('Profile');
+    const [activeTab, setActiveTab] = useState('');
     const [candidate, setCandidate] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [dp,setDp] = useState(false)
@@ -37,23 +39,27 @@
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
+    
     useEffect(() => {
       // Set currentUser when LoginUser from Redux is updated
       if (LoginUser) {
+        console.log('loginuser from redux')
         setCurrentUser(LoginUser);
       }
       if(candidates){
+        console.log('candidates from redux')
+
         setCandidate(candidates)
        }
       return ()=>{
         console.log('willUnmount')
       }
-    });
+    },[candidates]);
 
-    useEffect(()=>{
-      dispatch(getCandidate())
+    // useEffect(()=>{
+    //   dispatch(getCandidate())
       
-    },[dispatch])
+    // },[dispatch])
 
     useEffect(() => {
       if (activeTab === 'Profile') {
@@ -99,7 +105,8 @@
         if (response.status === 200) {
           setCandidate(response.data.candidates);
           if (response.data.candidates.length === 0) {
-            ResetUserVotedValue();
+            // ResetUserVotedValue();
+            fetchVotedValue();
           }
         }
       } catch (error) {
@@ -205,12 +212,13 @@
       }
     };
 
+    const fetchVotedValue = useResetVotedValue()
     async function ResetUserVotedValue() {
       try {
         let response = await axios.post('http://localhost:4001/api/v1/resetUserVoterValue');
 
         if (response.status === 200) {
-          console.log('IsVoted == false set');
+          console.log('reset the isVoted value');
         }
       } catch (error) {
         console.log('got error at resetUserVoterValue', error);

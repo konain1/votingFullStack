@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../redux/DashboarduserSlice';
 import getCandidate from '../redux/CandidateThunk';
+import useResetVotedValue from '../components/utils/useResetUserVotedValue'
 
 
 
@@ -15,6 +16,8 @@ const CandidateCard = () => {
   const CandidateData = useSelector(state => state.CandidateStore.candidates);
   const user = useSelector(state => state.UserStore.User); // currentUser
   const totalUsers = useSelector(state=>state.UsersStore.users) // all users
+  const fetchVotedValue = useResetVotedValue()
+
 
 
   // Memoized fetch function
@@ -30,11 +33,20 @@ const CandidateCard = () => {
 
   useEffect(()=>{
     dispatch(getCandidate())
-    if(candidates.length == 0){
-      ResetUserVotedValue()
-    }
+    // if(candidates.length == 0){
+    //   ResetUserVotedValue()
+    //   fetchVotedValue()
+    // }
     
   },[dispatch])
+
+  useEffect(() => {
+    if (candidates.length === 0) {
+      fetchVotedValue(); // Call custom hook to reset voted value
+    }
+  }, [candidates, fetchVotedValue]); 
+
+  
 
   async function ResetUserVotedValue() {
     try {
