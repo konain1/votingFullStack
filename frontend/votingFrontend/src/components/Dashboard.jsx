@@ -19,6 +19,7 @@ function Dashboard() {
   useEffect(()=>{
     dispatch(getCandidate())
     dispatch(GetUser())
+   
     
   },[])
 

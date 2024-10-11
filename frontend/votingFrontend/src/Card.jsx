@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
-
+import useOnlineStatus from './components/utils/useOnlineStutus'
 function Card (props) {
   const [flag, setFlag] = useState(false)
   const [party, setParty] = useState('')
   const [name,setName] = useState(props.name)
   const [ email,setEmail] = useState(props.email)
   const [age,setAge] = useState(props.age)
+
   
 
   const User = useSelector(state => state.UserStore.User)
 
+  const onlineStatus = useOnlineStatus();
 
+  
 
   const data = { email, name, party, age };
 
-  
+ 
   const handleParty = e => {
     setParty(e.target.value)
   }
@@ -59,6 +62,8 @@ function Card (props) {
     <div className='relative w-[300px] h-[384px] flex flex-col items-center rounded-[20px] bg-white shadow-lg'>
       {/* Card Image */}
       <div className='h-[192px] w-full'>
+
+      
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className='h-full rounded-t-[20px]'
@@ -67,6 +72,7 @@ function Card (props) {
           {/* Add your SVG content here */}
           <rect fill='#ffffff' width='540' height='450'></rect>
           <defs>
+
             <linearGradient
               id='a'
               gradientUnits='userSpaceOnUse'
@@ -77,7 +83,7 @@ function Card (props) {
               gradientTransform='rotate(222,648,379)'
             >
               <stop offset='0' stopColor='#ffffff'></stop>
-              <stop offset='1' stopColor='#FC726E'></stop>
+              <stop offset='1' stopColor='lightgrey'></stop>
             </linearGradient>
             <pattern
               patternUnits='userSpaceOnUse'
@@ -130,6 +136,7 @@ function Card (props) {
                   : 'bg-green-500 text-white border-blue-300 hover:bg-blue-500'
               }`}
             >
+            
               {props.role}
             </button>
             {User.role === 'admin' && (
@@ -140,6 +147,16 @@ function Card (props) {
                 nominee
               </button>
             )}
+            <button
+              className={`w-[76px] h-[31px] border-2 rounded-[4px] font-bold text-[11px] uppercase transition-all duration-300 ${
+                onlineStatus
+                  ? 'bg-red-500 text-white border-red-500 hover:bg-red-700'
+                  : 'bg-green-500 text-white border-blue-300 hover:bg-blue-500'
+              }`}
+            >
+            
+              {onlineStatus?'online':'offline'}
+            </button>
           </div>
         ) : (
           <div className=' flex space-x-2'>

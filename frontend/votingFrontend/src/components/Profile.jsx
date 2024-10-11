@@ -13,15 +13,16 @@
   import { useSelector,useDispatch } from 'react-redux';
   import getCandidate from '../redux/CandidateThunk';
 import { loginUser } from '../redux/DashboarduserSlice';
-import useResetVotedValue from '../components/utils/useResetUserVotedValue'
 
 
 
 
 
   function Profile() {
+
     console.log('profile')
-    const [activeTab, setActiveTab] = useState('');
+    
+    const [activeTab, setActiveTab] = useState('Profile');
     const [candidate, setCandidate] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [dp,setDp] = useState(false)
@@ -94,26 +95,26 @@ import useResetVotedValue from '../components/utils/useResetUserVotedValue'
       }
     };
 
-    const handlefetchCandidates = async () => {
+    // const handlefetchCandidates = async () => {
 
-      try {
+    //   try {
         
-        let response = await axios.get('http://localhost:4001/candidate/api/v1/candidates', {
-          headers: { 'Content-type': 'application/json' },
-        });
+    //     let response = await axios.get('http://localhost:4001/candidate/api/v1/candidates', {
+    //       headers: { 'Content-type': 'application/json' },
+    //     });
 
-        if (response.status === 200) {
-          setCandidate(response.data.candidates);
-          if (response.data.candidates.length === 0) {
-            // ResetUserVotedValue();
-            fetchVotedValue();
-          }
-        }
-      } catch (error) {
-        console.log(error);
-        throw new Error('Not able to fetch data');
-      }
-    };
+    //     if (response.status === 200) {
+    //       setCandidate(response.data.candidates);
+    //       if (response.data.candidates.length === 0) {
+    //         ResetUserVotedValue();
+    //         // fetchVotedValue();
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //     throw new Error('Not able to fetch data');
+    //   }
+    // };
 
 
    const handleReduxCandidate = ()=>{
@@ -152,34 +153,34 @@ import useResetVotedValue from '../components/utils/useResetUserVotedValue'
       }
     }
     
-    async function handleDisplayPicture(input) {
-      let file = input.target.files[0];
+    // async function handleDisplayPicture(input) {
+    //   let file = input.target.files[0];
 
-      try {
+    //   try {
         
-        const base64 = await new Promise((resolve,reject)=>{
+    //     const base64 = await new Promise((resolve,reject)=>{
 
-          const fileReader = new FileReader();  
-          fileReader.readAsDataURL(file);
+    //       const fileReader = new FileReader();  
+    //       fileReader.readAsDataURL(file);
 
 
-          fileReader.onload = () => {
-            resolve(fileReader.result);
-          };
+    //       fileReader.onload = () => {
+    //         resolve(fileReader.result);
+    //       };
     
-          fileReader.onerror = (error) => {
-            reject(error);
-          };
-        })
-        setDpImg(base64)
-        console.log(base64)
-      } catch (error) {
-        console.log('base64 error ',error)
+    //       fileReader.onerror = (error) => {
+    //         reject(error);
+    //       };
+    //     })
+    //     setDpImg(base64)
+    //     console.log(base64)
+    //   } catch (error) {
+    //     console.log('base64 error ',error)
         
-      }
+    //   }
     
       
-    }
+    // }
     
 
     const profilePicHandler = async (dp) => {
@@ -212,18 +213,17 @@ import useResetVotedValue from '../components/utils/useResetUserVotedValue'
       }
     };
 
-    const fetchVotedValue = useResetVotedValue()
-    async function ResetUserVotedValue() {
-      try {
-        let response = await axios.post('http://localhost:4001/api/v1/resetUserVoterValue');
+    // async function ResetUserVotedValue() {
+    //   try {
+    //     let response = await axios.post('http://localhost:4001/api/v1/resetUserVoterValue');
 
-        if (response.status === 200) {
-          console.log('reset the isVoted value');
-        }
-      } catch (error) {
-        console.log('got error at resetUserVoterValue', error);
-      }
-    }
+    //     if (response.status === 200) {
+    //       console.log('reset the isVoted value');
+    //     }
+    //   } catch (error) {
+    //     console.log('got error at resetUserVoterValue', error);
+    //   }
+    // }
 
     return (
       <>

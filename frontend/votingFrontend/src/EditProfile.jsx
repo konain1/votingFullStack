@@ -27,9 +27,6 @@ function EditProfile({ CurrentUser }) {
       return;
     }
 
-    
-
-
     setError(''); // Clear error message if validation passes
 
     const token = localStorage.getItem('token');

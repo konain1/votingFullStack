@@ -31,20 +31,22 @@ const CandidateCard = () => {
     handlefetchCandidatesMemoized(); 
   }, [CandidateData, handlefetchCandidatesMemoized]);
 
-  useEffect(()=>{
-    dispatch(getCandidate())
-    // if(candidates.length == 0){
-    //   ResetUserVotedValue()
-    //   fetchVotedValue()
-    // }
+  // useEffect(()=>{
+  //   // dispatch(getCandidate())
+  //   if(CandidateData.candidates.length == 0){
+  //     // ResetUserVotedValue()
+  //     console.log('candidate length ', candidates.length)
+  //   }
     
-  },[dispatch])
+  // },[])
 
   useEffect(() => {
-    if (candidates.length === 0) {
+    
+    console.log(CandidateData.candidates.length)
+    if (CandidateData.candidates.length === 0) {
       fetchVotedValue(); // Call custom hook to reset voted value
     }
-  }, [candidates, fetchVotedValue]); 
+  }, []); 
 
   
 
